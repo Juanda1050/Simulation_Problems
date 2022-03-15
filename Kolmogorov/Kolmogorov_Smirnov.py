@@ -1,8 +1,9 @@
 from curses import keyname
 import random
+import sys
 from prettytable import PrettyTable
 from Estadisticos import statistic_table_alfa_10, statistic_table_alfa_5, statistic_table_alfa_1
-
+import os
 
 def main():
     random_numbers = []
@@ -54,6 +55,8 @@ def statisticResult_alfa10(n, alfa, max_Dn):
         print("Los numeros son aceptados.")
     else:
         print("Los numeros no son aceptados.")
+    
+    restartProgram()
 
 
 def statisticResult_alfa5(n, alfa, max_Dn):
@@ -73,6 +76,8 @@ def statisticResult_alfa5(n, alfa, max_Dn):
     else:
         print("Los numeros no son aceptados.")
 
+    restartProgram()
+
 
 def statisticResult_alfa1(n, alfa, max_Dn):
     key = "alfa"
@@ -91,6 +96,20 @@ def statisticResult_alfa1(n, alfa, max_Dn):
     else:
         print("Los numeros no son aceptados.")
 
+    restartProgram()
+
+def restartProgram():
+    while True:
+        option = int(input("Ingrese (1) para reinicar el programa y (0) para salir: "))
+        if option == 1:
+            os.system ("cls")
+            main()
+            break
+        elif option == 0:
+            sys.exit()
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            continue
 
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
