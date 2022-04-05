@@ -19,20 +19,19 @@ def main():
                      errorMessage="Numero incorrecto. Intenta de nuevo")
         num_rectangulares.append(n)
 
-    print(len(num_rectangulares))
-
     x = [None] * len(num_rectangulares)
     tiempo_esperado = 0
+    
     for i in range(cant_num_rectangulares):
         x[i] = a + ((b - a) * num_rectangulares[i])
-        print(f'FE{(i + 1)} = {a} + ({b} - {a})({num_rectangulares[i]}) = {round(x[i])} {unidad}')
+        print(f'FE{(i + 1)} = {a} + ({b} - {a})({num_rectangulares[i]}) = {round(x[i], 5)} {unidad}')
         tiempo_esperado += x[i]
         i += 1
     
     promedio_esperado = tiempo_esperado / cant_num_rectangulares
 
-    print(f'Tiempo total esperado: {round(tiempo_esperado)} {unidad}')
-    print(f'Tiempo promedio esperado: {round(promedio_esperado)} {unidad}')
+    print(f'Tiempo total esperado: {round(tiempo_esperado, 5)} {unidad}')
+    print(f'Tiempo promedio esperado: {round(promedio_esperado, 5)} {unidad}')
 
     restartProgram()
 
