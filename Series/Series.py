@@ -1,3 +1,5 @@
+import os
+import sys
 
 def main():
     num_rectangulares = []
@@ -41,6 +43,8 @@ def main():
     Xo = ((pow(subintervalo, 2)) / (cant_num_rectangulares - 1)) * (pow((len(a) - FEi), 2) + pow((len(b) - FEi), 2) + pow((len(c) - FEi), 2) + pow((len(d) - FEi), 2))
 
     print("Xo² =", round(Xo, 5))
+
+    restartProgram()
     
 
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
@@ -52,6 +56,18 @@ def getInput(prompt="", cast=None, condition=None, errorMessage=None):
         except IOError:
             print(errorMessage or "Invalid input. Try again.")
 
+def restartProgram():
+    while True:
+        option = int(input("Ingrese (1) para reinicar el programa y (0) para salir: "))
+        if option == 1:
+            os.system ("cls")
+            main()
+            break
+        elif option == 0:
+            sys.exit()
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            continue
 
 if __name__ == '__main__':
     main()

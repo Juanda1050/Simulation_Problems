@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['Kolmogorov_Smirnov.py'],
+a = Analysis(['Series.py'],
              pathex=[],
              binaries=[],
              datas=[],
@@ -26,7 +26,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,  
           [],
-          name='Kolmogorov_Smirnov',
+          name='Series',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
