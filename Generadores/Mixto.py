@@ -2,13 +2,15 @@ import os
 import sys
 from prettytable import PrettyTable
 
+
 def main():
     multiplicativa = int(input("a = "))
     semilla = int(input("Xo = "))
     aditiva = int(input("c = "))
     modulo = int(input("m = "))
 
-    header_list = ["n", "X₀", "((a * X₀) + c) mod m", "Xn + 1" , "Números Rectangulares"]
+    header_list = ["n", "X₀", "((a * X₀) + c) mod m",
+                   "Xn + 1", "Números Rectangulares"]
     table = PrettyTable(header_list)
 
     aux_semilla = semilla
@@ -18,7 +20,8 @@ def main():
         solucion = ((multiplicativa * semilla) + aditiva) / modulo
         semilla_generada = ((multiplicativa * semilla) + aditiva) % modulo
         num_rectangulares = semilla_generada / modulo
-        table.add_row([str(n), str(semilla), str(round(solucion, 5)) + " + " + str(semilla_generada) + " / " + str(modulo), str(semilla_generada), str(semilla_generada) + " / " + str(modulo) + " = " + str(round(num_rectangulares, 5))])
+        table.add_row([str(n), str(semilla), str(round(solucion, 5)) + " + " + str(semilla_generada) + " / " + str(modulo),
+                      str(semilla_generada), str(semilla_generada) + " / " + str(modulo) + " = " + str(round(num_rectangulares, 5))])
         semilla = semilla_generada
         n += 1
         if(semilla_generada == aux_semilla):
@@ -27,7 +30,7 @@ def main():
             break
         else:
             continue
-    
+
     print(table)
 
     if(aux_semilla == semilla_generada and n - 1 == modulo):

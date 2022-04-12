@@ -1,6 +1,6 @@
 import os
 import sys
-import math 
+import math
 from prettytable import PrettyTable
 
 
@@ -16,21 +16,23 @@ def main():
 
         if(exponente >= 5):
             pe = 5 * pow(10, exponente - 2)
-            print("p.e. = 5x10^"+ str(int_exponente) + " = " + pe)
+            print("p.e. = 5x10" + superi(str(int_exponente)) + " = " + pe)
         elif(exponente < 5):
-            print("p.e. = m.c.m. λ(5^" + str(int_exponente) + "), λ(2^" + str(int_exponente) + ")")
+            print("p.e. = m.c.m. λ(5" + superi(str(int_exponente)) +
+                  "), λ(2" + superi(str(int_exponente)) + ")")
             lambda_5 = lambda_cinco(exponente)
             lambda_2 = lambda_dos(exponente)
 
             pe = mcm(lambda_5, lambda_2)
 
-            print("p.e. = m.c.m (" + str(int(lambda_5)) + ", " + str(int(lambda_2)) +")")
-            print("\np.e. = " + str(int(pe)))
+            print("p.e. = m.c.m (" + str(int(lambda_5)) +
+                  ", " + str(int(lambda_2)) + ")")
+            print("p.e. = " + str(int(pe)))
     else:
         pe = modulo / 4
-        print("\np.e. = " + str(modulo) + " / 4 = " + str(int(pe)))
+        print("p.e. = " + str(modulo) + " / 4 = " + str(int(pe)))
 
-    header_list = ["n", "X₀", "aX₀ mod m", "Xn + 1" , "Números Rectangulares"]
+    header_list = ["n", "X₀", "aX₀ mod m", "Xn + 1", "Números Rectangulares"]
     table = PrettyTable(header_list)
 
     aux_semilla = semilla
@@ -40,7 +42,8 @@ def main():
         solucion = (multiplicativa * semilla) / modulo
         semilla_generada = (multiplicativa * semilla) % modulo
         num_rectangulares = semilla_generada / modulo
-        table.add_row([str(n), str(semilla), str(round(solucion, 5)) + " + " + str(semilla_generada) + " / " + str(modulo), str(semilla_generada), str(semilla_generada) + " / " + str(modulo) + " = " + str(round(num_rectangulares, 5))])
+        table.add_row([str(n), str(semilla), str(round(solucion, 5)) + " + " + str(semilla_generada) + " / " + str(modulo),
+                      str(semilla_generada), str(semilla_generada) + " / " + str(modulo) + " = " + str(round(num_rectangulares, 5))])
         semilla = semilla_generada
         n += 1
         if(semilla_generada == aux_semilla):
@@ -62,20 +65,24 @@ def main():
 
 def lambda_cinco(exponente):
     solucion = 4 * pow(5, exponente - 1)
-    print("λ(5^" + str(int(exponente)) + ") = 5^" + str(int(exponente)) + "- 1 (4)")
+    print("λ(5" + superi(str(int(exponente))) + ") = 5" +
+          superi(str(int(exponente))) + superi(' - 1') + "(4) = " + str(int(solucion)))
     return solucion
+
 
 def lambda_dos(exponente):
     solucion = 0
-    if (exponente == 0): 
+    if (exponente == 0):
         solucion = 1
     elif (exponente == 1):
         solucion = 2
     elif (exponente > 1):
         solucion = pow(2, exponente - 2)
-    
-    print("λ(2^" + str(int(exponente)) + ") = 2^" + str(int(exponente)) + "- 2 (4)")
+
+    print("λ(2" + superi(str(int(exponente))) + ") = 2" +
+          superi(str(int(exponente))) + superi(' - 2') + "(4) = "  + str(int(solucion)))
     return solucion
+
 
 def mcd(a, b):
     while b != 0:
@@ -84,7 +91,15 @@ def mcd(a, b):
         a = aux
     return a
 
-mcm = lambda a, b: (a * b) / mcd(a, b)
+
+def mcm(a, b): return (a * b) / mcd(a, b)
+
+
+def superi(x):
+    normal = "0123456789-"
+    s = "⁰¹²³⁴⁵⁶⁷⁸⁹⁻"
+    res = x.maketrans(''.join(normal), ''.join(s))
+    return x.translate(res)
 
 
 def restartProgram():
