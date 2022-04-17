@@ -1,9 +1,8 @@
-from curses import keyname
 import random
 import sys
 from prettytable import PrettyTable
-from Estadisticos import statistic_table_alfa_10, statistic_table_alfa_5, statistic_table_alfa_1
 import os
+import pandas as pd
 
 
 def main():
@@ -44,72 +43,18 @@ def main():
     max_Dn = round(max(Dn), 5)
     print(table)
 
-    if(alfa == 10):
-        statisticResult_alfa10(cant_num_rectangulares, alfa, max_Dn)
-    elif(alfa == 5):
-        statisticResult_alfa5(cant_num_rectangulares, alfa, max_Dn)
-    elif(alfa == 1):
-        statisticResult_alfa1(cant_num_rectangulares, alfa, max_Dn)
+    df1 = pd.read_csv("https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Kolmogorov/Estadistico_tablas.csv")
 
+    table_value = df1.loc[cant_num_rectangulares, str(alfa)]
 
-def statisticResult_alfa10(cant_num_rectangulares, alfa, max_Dn):
-    key = "alfa"
-    res = [val[key]
-           for keys, val in statistic_table_alfa_10.items() if key in val]
-    statistic_table_value = statistic_table_alfa_10[cant_num_rectangulares].get('dis')
+    print("Valor mayor de estadisticos calculados:", max_Dn)
+    print("Estadistico de tablas:", table_value)
+    print("" + str(max_Dn) + " < " + str(table_value) + "")
 
-    for key_value in statistic_table_alfa_10:
-        if(key_value == cant_num_rectangulares or res == alfa):
-            print("Valor mayor de estadisticos calculados:", max_Dn)
-            print("Estadistico de tablas:", statistic_table_value)
-            print("" + str(max_Dn) + " < " + str(statistic_table_value) + "")
-
-    if(max_Dn < statistic_table_value):
+    if(max_Dn < table_value):
         print("Los numeros son aceptados.")
     else:
         print("Los numeros no son aceptados.")
-
-    restartProgram()
-
-
-def statisticResult_alfa5(cant_num_rectangulares, alfa, max_Dn):
-    key = "alfa"
-    res = [val[key]
-           for keys, val in statistic_table_alfa_5.items() if key in val]
-    statistic_table_value = statistic_table_alfa_5[cant_num_rectangulares].get('dis')
-
-    for key_value in statistic_table_alfa_5:
-        if(key_value == cant_num_rectangulares or res == alfa):
-            print("Valor mayor de estadisticos calculados:", max_Dn)
-            print("Estadistico de tablas:", statistic_table_value)
-            print("" + str(max_Dn) + " < " + str(statistic_table_value) + "")
-
-    if(max_Dn < statistic_table_value):
-        print("Los numeros son aceptados.")
-    else:
-        print("Los numeros no son aceptados.")
-
-    restartProgram()
-
-
-def statisticResult_alfa1(cant_num_rectangulares, alfa, max_Dn):
-    key = "alfa"
-    res = [val[key]
-           for keys, val in statistic_table_alfa_1.items() if key in val]
-    statistic_table_value = statistic_table_alfa_1[cant_num_rectangulares].get('dis')
-
-    for key_value in statistic_table_alfa_1:
-        if(key_value == cant_num_rectangulares or res == alfa):
-            print("Valor mayor de estadisticos calculados:", max_Dn)
-            print("Estadistico de tablas:", statistic_table_value)
-            print("" + str(max_Dn) + " < " + str(statistic_table_value) + "")
-
-    if(max_Dn < statistic_table_value):
-        print("Los numeros son aceptados.")
-    else:
-        print("Los numeros no son aceptados.")
-
-    restartProgram()
 
 
 def restartProgram():

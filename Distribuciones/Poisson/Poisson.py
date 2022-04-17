@@ -14,14 +14,13 @@ def main():
     distribucion_acumulada = 0
     comprobar_rango = []
     i = 0
-    print('\n')
+    comprobar_rango.append(0)
 
     while True:
         distribucion.append((math.exp(-media_estadistica) * pow(media_estadistica, i)) / math.factorial(i))
         distribucion_acumulada += distribucion[i]
         comprobar_rango.append(distribucion_acumulada)
         table.add_row([str(i), f'{distribucion[i]: .5f}', str(round(distribucion_acumulada, 5))])
-        print(f'Si R es > {distribucion[i]: .5f} y <= {round(distribucion_acumulada, 5)} entonces x = {i}')
         if distribucion_acumulada >= 0.99995:
             break
         else:
@@ -29,7 +28,12 @@ def main():
             continue
 
     print('\n', table)
-    
+
+    print("\n")
+    for j in range(len(comprobar_rango) - 1):
+        print(f'Si R es > {comprobar_rango[j]: .5f} y <= {round(comprobar_rango[j + 1], 5)} entonces x = {j}')
+
+    print("\n")
     num_rectangulares = []
     cant_num_rectangulares = int(
         input("Ingrese la cantidad de numeros rectangulares: "))
@@ -40,9 +44,17 @@ def main():
                      errorMessage="Numero incorrecto. Intenta de nuevo")
         num_rectangulares.append(n)
 
-    for i in range(cant_num_rectangulares):
-        if(num_rectangulares[i] > distribucion[i] and num_rectangulares[i] <= comprobar_rango[i]):
-            print(f'[{i}] = {num_rectangulares[i]} x = {i}')
+    print("\n")
+    demanda_total = 0
+    for x in range(len(comprobar_rango)):
+        for y in range(cant_num_rectangulares):
+            if(num_rectangulares[y] > comprobar_rango[x] and num_rectangulares[y] <= comprobar_rango[x + 1]):
+                print(f'[{y + 1}] = {num_rectangulares[y]} x = {x}')
+                demanda_total += x
+    print("Demanda total = ", demanda_total)
+
+    restartProgram()
+
 
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
