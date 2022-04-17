@@ -16,7 +16,7 @@ def main():
 
         if(exponente >= 5):
             pe = 5 * pow(10, exponente - 2)
-            print("p.e. = 5x10" + superi(str(int_exponente)) + " = " + pe)
+            print("p.e. = 5ₓ₁₀" + superi(str(int_exponente)) + " = " + str(int(pe)))
         elif(exponente < 5):
             print("p.e. = m.c.m. λ(5" + superi(str(int_exponente)) +
                   "), λ(2" + superi(str(int_exponente)) + ")")
@@ -27,10 +27,10 @@ def main():
 
             print("p.e. = m.c.m (" + str(int(lambda_5)) +
                   ", " + str(int(lambda_2)) + ")")
-            print("p.e. = " + str(int(pe)))
+            print("p.e. = " + str(int(pe)) + " p.e.")
     else:
         pe = modulo / 4
-        print("p.e. = " + str(modulo) + " / 4 = " + str(int(pe)))
+        print("p.e. = " + str(modulo) + " / 4 = " + str(int(pe)) + " p.e.")
 
     header_list = ["n", "X₀", "aX₀ mod m", "Xn + 1", "Números Rectangulares"]
     table = PrettyTable(header_list)

@@ -1,5 +1,9 @@
 import os
 import sys
+import pandas as pd
+import numpy as np
+import math
+
 
 def main():
     num_rectangulares = []
@@ -7,7 +11,7 @@ def main():
         input("Ingrese la cantidad de numeros rectangulares: "))
     alfa = int(input("Ingrese el porcentaje de alfa: "))
     subintervalo = int(
-        input("Ingrese la cantidad de subinvertalos bidimensionales: "))
+        input("Ingrese la cantidad de subinvertalos: "))
     for input_rectangulares in range(cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=str,
@@ -15,37 +19,58 @@ def main():
         num_rectangulares.append(n)
 
     FEi = float(cant_num_rectangulares - 1) / (pow(subintervalo, 2))
+    listAlphabet = list(map(chr, range(65, 65 + subintervalo)))
+
     pairs_num = []
+    for index, elem in enumerate(num_rectangulares):
+        if index + 1 <= len(num_rectangulares) and index - 1 >= 0:
+            prev_el = float(num_rectangulares[index - 1])
+            curr_el = float(elem)
+            pairs_num.append([prev_el, curr_el])
+            print(prev_el, curr_el)
 
-    for previous, current in zip(num_rectangulares, num_rectangulares[1:]):
-        pairs_num.append([previous, current])
+    counters = []
+    interval = 1 / subintervalo
+    interval_x = 0
+    interval_y = 0
 
-    new_l = [(float(x[0]), float(x[1])) for x in pairs_num]
-    intervalo_matriz = float(1) / subintervalo
+    for _ in np.arange(interval_x, 1, (interval_x + interval)):
+        x_values = []
+        for _ in np.arange(interval_y, 1, (interval_y + interval)):
+            count = 0
+            for pairs in pairs_num:
+                if interval_x <= pairs[0] < (interval_x + interval) and interval_y <= pairs[1] < (
+                        interval_y + interval):
+                    count += 1
+            interval_y += interval
+            x_values.append(count)
+        interval_y = 0
+        interval_x += interval
+        counters.append(x_values)
 
-    a = []
-    b = []
-    c = []
-    d = []
+    print(counters)
 
-    [a.append(x) for x in new_l if x[0] < intervalo_matriz and x[1] < intervalo_matriz]
-    [b.append(x) for x in new_l if x[0] > intervalo_matriz and x[1] < intervalo_matriz]
-    [c.append(x) for x in new_l if x[0] < intervalo_matriz and x[1] > intervalo_matriz]
-    [d.append(x) for x in new_l if x[0] > intervalo_matriz and x[1] > intervalo_matriz]
+    df1 = pd.read_csv("https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv",
+                      index_col=0, header=0)
 
-    [print("La coordenada", x, "está en A con índice", a.index(x)) for x in new_l if x in a]
-    [print("La coordenada", x, "está en B con índice", b.index(x)) for x in new_l if x in b]
-    [print("La coordenada", x, "está en C con índice", c.index(x)) for x in new_l if x in c]
-    [print("La coordenada", x, "está en D con índice", d.index(x)) for x in new_l if x in d]
+    tdata = df1.loc[pow((subintervalo - 1), 2), str(alfa / 100)]
 
-    print("FEi =", cant_num_rectangulares, "- 1 /(",subintervalo,")² =",FEi)
+    sumax = 0
+    for x in range(subintervalo):
+        for y in range(subintervalo):
+            sumax += math.pow(counters[x][y] - FEi, 2)
+    x0t2 = (1 / FEi) * sumax
 
-    Xo = ((pow(subintervalo, 2)) / (cant_num_rectangulares - 1)) * (pow((len(a) - FEi), 2) + pow((len(b) - FEi), 2) + pow((len(c) - FEi), 2) + pow((len(d) - FEi), 2))
+    print("FEi =", cant_num_rectangulares, "- 1 /(", subintervalo, ")² =", FEi)
+    print("Xo² =", round(x0t2, 5))
+    print("X²", alfa / 100, ",", pow((subintervalo - 1), 2), "=", tdata)
 
-    print("Xo² =", round(Xo, 5))
+    # Evaluate x0t2 with table
+    if x0t2 < tdata:
+        print("Los numeros son aceptados")
+    else:
+        print("Los numeros no son aceptados")
 
-    restartProgram()
-    
 
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
@@ -56,11 +81,13 @@ def getInput(prompt="", cast=None, condition=None, errorMessage=None):
         except IOError:
             print(errorMessage or "Invalid input. Try again.")
 
+
 def restartProgram():
     while True:
-        option = int(input("Ingrese (1) para reinicar el programa y (0) para salir: "))
+        option = int(
+            input("Ingrese (1) para reinicar el programa y (0) para salir: "))
         if option == 1:
-            os.system ("cls")
+            os.system("cls")
             main()
             break
         elif option == 0:
@@ -68,6 +95,7 @@ def restartProgram():
         else:
             print("Opcion invalida. Intente de nuevo.")
             continue
+
 
 if __name__ == '__main__':
     main()
