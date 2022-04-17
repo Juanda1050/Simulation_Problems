@@ -48,28 +48,39 @@ def main():
         interval_x += interval
         counters.append(x_values)
 
-    print(counters)
+    df = pd.DataFrame(counters, columns=listAlphabet, index=listAlphabet)
+    print(df)
 
     df1 = pd.read_csv("https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv",
                       index_col=0, header=0)
 
-    tdata = df1.loc[pow((subintervalo - 1), 2), str(alfa / 100)]
+    n_restada = pow((subintervalo), 2) - 1
+    tdata = df1.loc[n_restada, str(alfa / 100)]
 
     sumax = 0
+    print(
+        f'Xo² = {pow((subintervalo), 2)} / {cant_num_rectangulares - 1}', end='[')
     for x in range(subintervalo):
         for y in range(subintervalo):
             sumax += math.pow(counters[x][y] - FEi, 2)
+            print(f'({counters[x][y]} - {FEi})²', end='')
+            if x + 1 <= subintervalo and y + 1 <= subintervalo:
+                if y != subintervalo - 1:
+                    print(" + ", end='')
+
+    print("]")
     x0t2 = (1 / FEi) * sumax
 
     print("FEi =", cant_num_rectangulares, "- 1 /(", subintervalo, ")² =", FEi)
-    print("Xo² =", round(x0t2, 5))
-    print("X²", alfa / 100, ",", pow((subintervalo - 1), 2), "=", tdata)
+    print("Xo² =", round(x0t2, 2))
+    print("X²", alfa / 100, ",", n_restada, "=", tdata)
 
-    # Evaluate x0t2 with table
     if x0t2 < tdata:
         print("Los numeros son aceptados")
     else:
         print("Los numeros no son aceptados")
+
+    restartProgram()
 
 
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
