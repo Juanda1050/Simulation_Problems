@@ -3,29 +3,17 @@ import sys
 from prettytable import PrettyTable
 import os
 import pandas as pd
-from termcolor import colored
 
 
 def main():
     # Print title
-    title = colored('𝙿𝚛𝚞𝚎𝚋𝚊 𝙴𝚜𝚝𝚊𝚍í𝚜𝚝𝚒𝚌𝚊 𝚍𝚎 𝙺𝚘𝚕𝚖𝚘𝚐𝚘𝚛𝚘𝚟 - 𝚂𝚖𝚒𝚛𝚗𝚘𝚟',
-                    'green', attrs=['blink'])
-    print(title, "\n")
-    # random_numbers = []
-    # n = getInput(prompt="Ingrese la cantidad de numeros aleatorios a generar: ", cast=int,
-    #              condition=lambda x: x > 0, errorMessage="El valor debe ser mayor a cero. Intenta de nuevo.")
-    # alfa = getInput(prompt="Ingrese el valor porcentual de alfa (en entero): ", cast=int,
-    #                 condition=lambda x: x > 0, errorMessage="El valor debe ser mayor a cero. Intenta de nuevo.")
-    # for rnd in range(0, n):
-    #     number = round(random.uniform(0, 1), 5)
-    #     random_numbers.append(number)
+    print('Prueba Estadística de Kolmogorov - Smirnov', "\n")
 
     # Inputs
     num_rectangulares = []
     cant_num_rectangulares = int(
         input("Ingrese la cantidad de numeros rectangulares: "))
-    alfa = getInput(prompt="Ingrese el valor porcentual de alfa (en entero): ", cast=int,
-                    condition=lambda x: x > 0, errorMessage="El valor debe ser mayor a cero. Intenta de nuevo.")
+    alfa = int(input("Ingrese el valor porcentual de alfa (en entero):"))
     for input_rectangulares in range(0, cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=float,

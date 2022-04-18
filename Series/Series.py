@@ -3,14 +3,11 @@ import sys
 import pandas as pd
 import numpy as np
 import math
-from termcolor import colored
 
 
 def main():
     # Print title
-    title = colored('𝙿𝚛𝚞𝚎𝚋𝚊 𝙴𝚜𝚝𝚊𝚍í𝚜𝚝𝚒𝚌𝚊 𝚍𝚎 𝚂𝚎𝚛𝚒𝚎𝚜',
-                    'green', attrs=['blink'])
-    print(title, "\n")
+    print('Prueba Estadística de Series', "\n")
 
     # Inputs
     num_rectangulares = []

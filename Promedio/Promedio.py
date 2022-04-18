@@ -2,13 +2,11 @@ from cmath import sqrt
 import os
 import sys
 import pandas as pd
-from termcolor import colored
 
 
 def main():
     # Print title
-    title = colored('𝙿𝚛𝚞𝚎𝚋𝚊 𝙴𝚜𝚝𝚊𝚍í𝚜𝚝𝚒𝚌𝚊 𝚍𝚎 𝙿𝚛𝚘𝚖𝚎𝚍𝚒𝚘', 'green', attrs=['blink'])
-    print(title, "\n")
+    print('Prueba Estadística de Promedio', "\n")
 
     # Inputs
     num_rectangulares = []

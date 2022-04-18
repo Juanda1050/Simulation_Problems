@@ -1,14 +1,11 @@
 import os
 import sys
 from prettytable import PrettyTable
-from termcolor import colored
 
 
 def main():
     # Print title
-    title = colored('𝙶𝚎𝚗𝚎𝚛𝚊𝚍𝚘𝚛 𝙲𝚘𝚗𝚐𝚛𝚞𝚎𝚗𝚌𝚒𝚊𝚕 𝙼𝚒𝚡𝚝𝚘',
-                    'green', attrs=['blink'])
-    print(title, "\n")
+    print('Generador Congruencial Mixto', "\n")
 
     # Inputs
     multiplicativa = getInput(prompt="a = ",

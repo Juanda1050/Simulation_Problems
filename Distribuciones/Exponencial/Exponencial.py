@@ -1,13 +1,11 @@
 import os
 import sys
 import math
-from termcolor import colored
 
 
 def main():
     # Print title
-    title = colored('𝙳𝚒𝚜𝚝𝚛𝚒𝚋𝚞𝚌𝚒ó𝚗 𝙴𝚡𝚙𝚘𝚗𝚎𝚗𝚌𝚒𝚊𝚕', 'green', attrs=['blink'])
-    print(title, "\n")
+    print('Distribucición Exponencial', "\n")
 
     #Inputs
     num_rectangulares = []
@@ -15,8 +13,7 @@ def main():
                                       cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     media_estadistica =  getInput(prompt="Ingrese la media estadistica de la variable aleatoria: ",
                                       cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
-    unidad =  getInput(prompt="Ingrese el tipo de unidades: ",
-                                      cast=str, condition=lambda x: x > 0, errorMessage="Invalido. Intenta de nuevo")
+    unidad =  input("Ingrese el tipo de unidades: ")
     for input_rectangulares in range(0, cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=float,

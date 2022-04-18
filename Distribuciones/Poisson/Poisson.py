@@ -2,13 +2,11 @@ import os
 import sys
 import math
 from prettytable import PrettyTable
-from termcolor import colored
 
 
 def main():
     # Print title
-    title = colored('𝙳𝚒𝚜𝚝𝚛𝚒𝚋𝚞𝚌𝚒ó𝚗 𝙿𝚘𝚒𝚜𝚜𝚘𝚗', 'green', attrs=['blink'])
-    print(title, "\n")
+    print('Distribución Poisson', "\n")
 
     # Inputs
     media_estadistica = getInput(prompt="Ingrese la media estadistica variable: ",

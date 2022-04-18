@@ -1,14 +1,11 @@
 import os
 import sys
 import pandas as pd
-from termcolor import colored
 
 
 def main():
     # Print title
-    title = colored('𝙿𝚛𝚞𝚎𝚋𝚊 𝙴𝚜𝚝𝚊𝚍í𝚜𝚝𝚒𝚌𝚊 𝚍𝚎 𝙵𝚛𝚎𝚌𝚞𝚎𝚗𝚌𝚒𝚊𝚜',
-                    'green', attrs=['blink'])
-    print(title, "\n")
+    print('Prueba Estadística de Frecuencias', "\n")
 
     # Inputs
     num_rectangulares = []
@@ -59,25 +56,25 @@ def main():
     print(df)
 
     # Table calculations
-    df1 = pd.read_csv(
-        "https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv", index_col=0, header=0)
-    tdata = df1.loc[(subintervalo - 1), str(alfa / 100)]
+    # df1 = pd.read_csv(
+    #     "https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv", index_col=0, header=0)
+    # tdata = df1.loc[(subintervalo - 1), str(alfa / 100)]
 
-    # Sum of FO-FE
-    sumax = 0
-    for x in range(subintervalo):
-        sumax += (counters[x] - FEi) * (counters[x] - FEi)
-    x0t2 = (1 / FEi) * sumax
+    # # Sum of FO-FE
+    # sumax = 0
+    # for x in range(subintervalo):
+    #     sumax += (counters[x] - FEi) * (counters[x] - FEi)
+    # x0t2 = (1 / FEi) * sumax
 
-    print("FEi =", FEi)
-    print("Xo² =", x0t2)
-    print("X²", alfa / 100, ",", subintervalo - 1, ":", tdata)
+    # print("FEi =", FEi)
+    # print("Xo² =", x0t2)
+    # print("X²", alfa / 100, ",", subintervalo - 1, ":", tdata)
 
-    # Evaluate Xot² with table
-    if x0t2 < tdata:
-        print("Los numeros son aceptados")
-    else:
-        print("Los numeros no son aceptados")
+    # # Evaluate Xot² with table
+    # if x0t2 < tdata:
+    #     print("Los numeros son aceptados")
+    # else:
+    #     print("Los numeros no son aceptados")
 
     # Restart for .exe
     restartProgram()
