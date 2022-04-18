@@ -3,15 +3,23 @@ import sys
 import pandas as pd
 import numpy as np
 import math
+from termcolor import colored
 
 
 def main():
+    # Print title
+    title = colored('𝙿𝚛𝚞𝚎𝚋𝚊 𝙴𝚜𝚝𝚊𝚍í𝚜𝚝𝚒𝚌𝚊 𝚍𝚎 𝚂𝚎𝚛𝚒𝚎𝚜',
+                    'green', attrs=['blink'])
+    print(title, "\n")
+
+    # Inputs
     num_rectangulares = []
-    cant_num_rectangulares = int(
-        input("Ingrese la cantidad de numeros rectangulares: "))
-    alfa = int(input("Ingrese el porcentaje de alfa: "))
-    subintervalo = int(
-        input("Ingrese la cantidad de subinvertalos: "))
+    cant_num_rectangulares = getInput(prompt="Ingrese la cantidad de numeros rectangulares: ",
+                                      cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    alfa = getInput(prompt="Ingrese el porcentaje de alfa: ",
+                    cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    subintervalo = getInput(prompt="Ingrese la cantidad de subinvertalos: ",
+                    cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     for input_rectangulares in range(cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=str,
@@ -21,6 +29,7 @@ def main():
     FEi = float(cant_num_rectangulares - 1) / (pow(subintervalo, 2))
     listAlphabet = list(map(chr, range(65, 65 + subintervalo)))
 
+    # Making pairs
     pairs_num = []
     for index, elem in enumerate(num_rectangulares):
         if index + 1 <= len(num_rectangulares) and index - 1 >= 0:
@@ -34,6 +43,7 @@ def main():
     interval_x = 0
     interval_y = 0
 
+    # Locate pairs in the matrix
     for _ in np.arange(interval_x, 1, (interval_x + interval)):
         x_values = []
         for _ in np.arange(interval_y, 1, (interval_y + interval)):
@@ -51,6 +61,7 @@ def main():
     df = pd.DataFrame(counters, columns=listAlphabet, index=listAlphabet)
     print(df)
 
+    #Table of calculations
     df1 = pd.read_csv("https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv",
                       index_col=0, header=0)
 
@@ -80,6 +91,7 @@ def main():
     else:
         print("Los numeros no son aceptados")
 
+    # Restart for .exe
     restartProgram()
 
 

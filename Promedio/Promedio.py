@@ -63,7 +63,7 @@ def main():
     if (Zo < estadistico_tablas):
         print("Los numeros son aceptados")
     else:
-        print("Los numeros son rechazados")
+        print("Los numeros no son aceptados")
 
     # Restart for .exe
     restartProgram()

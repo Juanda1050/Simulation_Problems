@@ -1,13 +1,24 @@
 import os
 import sys
 from prettytable import PrettyTable
+from termcolor import colored
 
 
 def main():
-    multiplicativa = int(input("a = "))
-    semilla = int(input("Xo = "))
-    aditiva = int(input("c = "))
-    modulo = int(input("m = "))
+    # Print title
+    title = colored('𝙶𝚎𝚗𝚎𝚛𝚊𝚍𝚘𝚛 𝙲𝚘𝚗𝚐𝚛𝚞𝚎𝚗𝚌𝚒𝚊𝚕 𝙼𝚒𝚡𝚝𝚘',
+                    'green', attrs=['blink'])
+    print(title, "\n")
+
+    # Inputs
+    multiplicativa = getInput(prompt="a = ",
+                              cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    semilla = getInput(prompt="Xo = ",
+                       cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    aditiva = getInput(prompt="c = ",
+                       cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    modulo = getInput(prompt="m = ",
+                      cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
 
     header_list = ["n", "X₀", "((a * X₀) + c) mod m",
                    "Xn + 1", "Números Rectangulares"]
@@ -38,7 +49,18 @@ def main():
     else:
         print("Generador Congruencial Mixto No Confiable")
 
+    # Restart for .exe
     restartProgram()
+
+
+def getInput(prompt="", cast=None, condition=None, errorMessage=None):
+    while True:
+        try:
+            response = (cast or str)(input(prompt))
+            assert condition is None or condition(response)
+            return response
+        except IOError:
+            print(errorMessage or "Invalid input. Try again.")
 
 
 def restartProgram():

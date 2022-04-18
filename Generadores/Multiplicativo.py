@@ -2,14 +2,25 @@ import os
 import sys
 import math
 from prettytable import PrettyTable
+from termcolor import colored
 
 
 def main():
-    multiplicativa = int(input("a = "))
-    semilla = int(input("Xo = "))
-    modulo = int(input("m = "))
+    # Print title
+    title = colored('𝙶𝚎𝚗𝚎𝚛𝚊𝚍𝚘𝚛 𝙲𝚘𝚗𝚐𝚛𝚞𝚎𝚗𝚌𝚒𝚊𝚕 𝙼𝚞𝚕𝚝𝚒𝚙𝚕𝚒𝚌𝚊𝚝𝚒𝚟𝚘',
+                    'green', attrs=['blink'])
+    print(title, "\n")
+
+    # Inputs
+    multiplicativa = getInput(prompt="a = ",
+                              cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    semilla = getInput(prompt="Xo = ",
+                       cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    modulo = getInput(prompt="m = ",
+                      cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     pe = 0
 
+    # Obtain power
     if((modulo % 10) == 0):
         exponente = math.log10(modulo)
         int_exponente = int(exponente)
@@ -60,6 +71,7 @@ def main():
     else:
         print("Generador Congruencial Multiplicativo No Confiable")
 
+    # Restart for .exe
     restartProgram()
 
 
@@ -80,7 +92,7 @@ def lambda_dos(exponente):
         solucion = pow(2, exponente - 2)
 
     print("λ(2" + superi(str(int(exponente))) + ") = 2" +
-          superi(str(int(exponente))) + superi(' - 2') + "(4) = "  + str(int(solucion)))
+          superi(str(int(exponente))) + superi(' - 2') + "(4) = " + str(int(solucion)))
     return solucion
 
 
@@ -100,6 +112,17 @@ def superi(x):
     s = "⁰¹²³⁴⁵⁶⁷⁸⁹⁻"
     res = x.maketrans(''.join(normal), ''.join(s))
     return x.translate(res)
+
+
+# Condition for inputs
+def getInput(prompt="", cast=None, condition=None, errorMessage=None):
+    while True:
+        try:
+            response = (cast or str)(input(prompt))
+            assert condition is None or condition(response)
+            return response
+        except IOError:
+            print(errorMessage or "Invalido. Intenta de nuevo.")
 
 
 def restartProgram():

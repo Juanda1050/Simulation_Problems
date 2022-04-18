@@ -3,9 +3,14 @@ import sys
 from prettytable import PrettyTable
 import os
 import pandas as pd
+from termcolor import colored
 
 
 def main():
+    # Print title
+    title = colored('𝙿𝚛𝚞𝚎𝚋𝚊 𝙴𝚜𝚝𝚊𝚍í𝚜𝚝𝚒𝚌𝚊 𝚍𝚎 𝙺𝚘𝚕𝚖𝚘𝚐𝚘𝚛𝚘𝚟 - 𝚂𝚖𝚒𝚛𝚗𝚘𝚟',
+                    'green', attrs=['blink'])
+    print(title, "\n")
     # random_numbers = []
     # n = getInput(prompt="Ingrese la cantidad de numeros aleatorios a generar: ", cast=int,
     #              condition=lambda x: x > 0, errorMessage="El valor debe ser mayor a cero. Intenta de nuevo.")
@@ -14,12 +19,13 @@ def main():
     # for rnd in range(0, n):
     #     number = round(random.uniform(0, 1), 5)
     #     random_numbers.append(number)
+
+    # Inputs
     num_rectangulares = []
     cant_num_rectangulares = int(
         input("Ingrese la cantidad de numeros rectangulares: "))
     alfa = getInput(prompt="Ingrese el valor porcentual de alfa (en entero): ", cast=int,
                     condition=lambda x: x > 0, errorMessage="El valor debe ser mayor a cero. Intenta de nuevo.")
-
     for input_rectangulares in range(0, cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=float,
@@ -27,6 +33,7 @@ def main():
                      errorMessage="Numero incorrecto. Intenta de nuevo")
         num_rectangulares.append(n)
 
+    # Sort array of numbers
     num_rectangulares.sort(key=float)
 
     Fx = [None] * len(num_rectangulares)
@@ -43,7 +50,9 @@ def main():
     max_Dn = round(max(Dn), 5)
     print(table)
 
-    df1 = pd.read_csv("https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Kolmogorov/Estadistico_tablas.csv")
+    # Table calculations
+    df1 = pd.read_csv(
+        "https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Kolmogorov/Estadistico_tablas.csv")
 
     table_value = df1.loc[cant_num_rectangulares, str(alfa)]
 
@@ -55,6 +64,19 @@ def main():
         print("Los numeros son aceptados.")
     else:
         print("Los numeros no son aceptados.")
+
+    # Restart for .exe
+    restartProgram()
+
+
+def getInput(prompt="", cast=None, condition=None, errorMessage=None):
+    while True:
+        try:
+            response = (cast or str)(input(prompt))
+            assert condition is None or condition(response)
+            return response
+        except IOError:
+            print(errorMessage or "Invalid input. Try again.")
 
 
 def restartProgram():
@@ -70,16 +92,6 @@ def restartProgram():
         else:
             print("Opcion invalida. Intente de nuevo.")
             continue
-
-
-def getInput(prompt="", cast=None, condition=None, errorMessage=None):
-    while True:
-        try:
-            response = (cast or str)(input(prompt))
-            assert condition is None or condition(response)
-            return response
-        except IOError:
-            print(errorMessage or "Invalid input. Try again.")
 
 
 if __name__ == '__main__':
