@@ -1,13 +1,20 @@
 import os
 import sys
-import math  
+import math
 from prettytable import PrettyTable
+from termcolor import colored
+
 
 def main():
-    media_estadistica = int(
-        input("Ingrese la media estadistica variable: "))
+    # Print title
+    title = colored('𝙳𝚒𝚜𝚝𝚛𝚒𝚋𝚞𝚌𝚒ó𝚗 𝙿𝚘𝚒𝚜𝚜𝚘𝚗', 'green', attrs=['blink'])
+    print(title, "\n")
 
-    header_list = ["x", "Distribucion estadistica f(xi)", "Distribucion estadistica acumulada F(xi)"]
+    # Inputs
+    media_estadistica = getInput(prompt="Ingrese la media estadistica variable: ",
+                                 cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    header_list = [
+        "x", "Distribucion estadistica f(xi)", "Distribucion estadistica acumulada F(xi)"]
     table = PrettyTable(header_list)
 
     distribucion = []
@@ -16,27 +23,31 @@ def main():
     i = 0
     comprobar_rango.append(0)
 
+    # Get values
     while True:
-        distribucion.append((math.exp(-media_estadistica) * pow(media_estadistica, i)) / math.factorial(i))
+        distribucion.append((math.exp(-media_estadistica)
+                            * pow(media_estadistica, i)) / math.factorial(i))
         distribucion_acumulada += distribucion[i]
         comprobar_rango.append(distribucion_acumulada)
-        table.add_row([str(i), f'{distribucion[i]: .5f}', str(round(distribucion_acumulada, 5))])
+        table.add_row([str(i), f'{distribucion[i]: .5f}', str(
+            round(distribucion_acumulada, 5))])
         if distribucion_acumulada >= 0.99995:
             break
         else:
             i += 1
             continue
-
     print('\n', table)
 
+    # Print ranges
     print("\n")
     for j in range(len(comprobar_rango) - 1):
         print(f'Si R es > {comprobar_rango[j]: .5f} y <= {round(comprobar_rango[j + 1], 5)} entonces x = {j}')
 
+    # Input numbers
     print("\n")
     num_rectangulares = []
-    cant_num_rectangulares = int(
-        input("Ingrese la cantidad de numeros rectangulares: "))
+    cant_num_rectangulares = getInput(prompt="Ingrese la cantidad de numeros rectangulares: ",
+                                      cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     for input_rectangulares in range(0, cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=float,
@@ -44,6 +55,7 @@ def main():
                      errorMessage="Numero incorrecto. Intenta de nuevo")
         num_rectangulares.append(n)
 
+    #Locate the numbers into the ranges
     print("\n")
     demanda_total = 0
     for x in range(len(comprobar_rango)):
@@ -53,9 +65,11 @@ def main():
                 demanda_total += x
     print("Demanda total = ", demanda_total)
 
+ # Restart for .exe
     restartProgram()
 
 
+# Condition for inputs
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
         try:
@@ -63,7 +77,7 @@ def getInput(prompt="", cast=None, condition=None, errorMessage=None):
             assert condition is None or condition(response)
             return response
         except IOError:
-            print(errorMessage or "Invalid input. Try again.")
+            print(errorMessage or "Invalido. Intenta de nuevo.")
 
 
 def restartProgram():

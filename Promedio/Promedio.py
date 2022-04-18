@@ -3,18 +3,20 @@ import os
 import sys
 import pandas as pd
 from termcolor import colored
-from titles import titulo_promedio
 
 
 def main():
-    title = colored(titulo_promedio, 'green', attrs=['blink'])
+    # Print title
+    title = colored('𝙿𝚛𝚞𝚎𝚋𝚊 𝙴𝚜𝚝𝚊𝚍í𝚜𝚝𝚒𝚌𝚊 𝚍𝚎 𝙿𝚛𝚘𝚖𝚎𝚍𝚒𝚘', 'green', attrs=['blink'])
     print(title, "\n")
+
+    # Inputs
     num_rectangulares = []
     sumatoria = 0
     cant_num_rectangulares = getInput(prompt="Ingrese la cantidad de numeros rectangulares: ",
                                       cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     alfa = getInput(prompt="Ingrese el porcentaje de alfa: ",
-                                      cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+                    cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     for input_rectangulares in range(0, cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=float,
@@ -23,19 +25,23 @@ def main():
         num_rectangulares.append(n)
         sumatoria += num_rectangulares[input_rectangulares]
 
+    # Total of inputs and average
     promedio = sumatoria / cant_num_rectangulares
     print("\nΣ =", sumatoria)
     print("x̄ =", round(promedio, 5))
 
+    # Statistical
     Zo = abs(((promedio - 0.5) * sqrt(cant_num_rectangulares)) / sqrt((1 / 12)))
     print(
         f'Zo = |(({promedio: .5f} - ¹⁄₂ ) √{cant_num_rectangulares}) / √(¹⁄₁₂)| = {Zo: .5f}')
 
+    # Table statistic
     alfa_real = (100 - alfa) / 100
     estadistico_Z = alfa_real / 2
     print(f'\nαreal = 100 - {alfa} = {int(alfa_real * 100)}%')
     print(f'Zα⁄₂ = {alfa_real} / 2 = {estadistico_Z}')
 
+    # Get index and header of the table statistics
     df1 = pd.read_csv(
         "https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Promedio/Distribucion_normal.csv", header=0)
     df1 = df1.loc[:, ~df1.columns.str.contains('^Unnamed')]
@@ -49,17 +55,21 @@ def main():
     estadistico_tablas = float(col) + (float(index) / 10)
     print(f'Zα⁄₂ = {estadistico_tablas}')
 
+    # Compare statistics
     print("\nZo < Zα⁄₂")
     print(f'{Zo: .5f} < {estadistico_tablas}')
 
+    # Print analysis
     if (Zo < estadistico_tablas):
         print("Los numeros son aceptados")
     else:
         print("Los numeros son rechazados")
 
+    # Restart for .exe
     restartProgram()
 
 
+# Condition for inputs
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
         try:
@@ -67,7 +77,7 @@ def getInput(prompt="", cast=None, condition=None, errorMessage=None):
             assert condition is None or condition(response)
             return response
         except IOError:
-            print(errorMessage or "Invalid input. Try again.")
+            print(errorMessage or "Invalido. Intenta de nuevo.")
 
 
 def restartProgram():

@@ -1,17 +1,23 @@
 import os
 import sys
+from termcolor import colored
 
 
 def main():
-    num_rectangulares = []
-    cant_num_rectangulares = int(
-        input("Ingrese la cantidad de numeros rectangulares: "))
-    a = int(
-        input("Ingrese el valor minimo: "))
-    b = int(
-        input("Ingrese el valor maximo: "))
-    unidad = str(input("Ingrese el tipo de unidades: "))
+    # Print title
+    title = colored('𝙳𝚒𝚜𝚝𝚛𝚒𝚋𝚞𝚌𝚒ó𝚗 𝚄𝚗𝚒𝚏𝚘𝚛𝚖𝚎', 'green', attrs=['blink'])
+    print(title, "\n")
 
+    #Inputs
+    num_rectangulares = []
+    cant_num_rectangulares =  getInput(prompt="Ingrese la cantidad de numeros rectangulares: ",
+                                      cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    a =  getInput(prompt="Ingrese el valor minimo (a): ",
+                                      cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    b =  getInput(prompt="Ingrese el valor maximo (b): ",
+                                      cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+    unidad =  getInput(prompt="Ingrese el tipo de unidades: ",
+                                      cast=str, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     for input_rectangulares in range(0, cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=float,
@@ -33,9 +39,11 @@ def main():
     print(f'Tiempo total esperado: {round(tiempo_esperado, 5)} {unidad}')
     print(f'Tiempo promedio esperado: {round(promedio_esperado, 5)} {unidad}')
 
+ # Restart for .exe
     restartProgram()
 
 
+# Condition for inputs
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
         try:
@@ -43,7 +51,7 @@ def getInput(prompt="", cast=None, condition=None, errorMessage=None):
             assert condition is None or condition(response)
             return response
         except IOError:
-            print(errorMessage or "Invalid input. Try again.")
+            print(errorMessage or "Invalido. Intenta de nuevo.")
 
 
 def restartProgram():
