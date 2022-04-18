@@ -82,8 +82,6 @@ def main():
     # Restart for .exe
     restartProgram()
 
-# Condition for inputs
-
 
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
