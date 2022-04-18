@@ -1,15 +1,56 @@
+from cmath import sqrt
 import os
 import sys
 import pandas as pd
 import numpy as np
-import math
 
 
 def main():
     num_rectangulares = []
+    sumatoria = 0
     cant_num_rectangulares = int(
         input("Ingrese la cantidad de numeros rectangulares: "))
-    alfa = int(input("Ingrese el porcentaje de alfa: "))
+    alfa = int(input("Ingrese el porcentaje de alfa: ")) 
+    for input_rectangulares in range(0, cant_num_rectangulares):
+        n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
+                     cast=float,
+                     condition=lambda x: x > 0,
+                     errorMessage="Numero incorrecto. Intenta de nuevo")
+        num_rectangulares.append(n)
+        sumatoria += num_rectangulares[input_rectangulares]
+    
+    promedio = sumatoria / cant_num_rectangulares
+    print("\nΣ =", sumatoria)
+    print("x̄ =", round(promedio, 5))
+
+    Zo = abs(((promedio - 0.5) * sqrt(cant_num_rectangulares)) / sqrt((1 / 12)))
+    print(f'Zo = |(({promedio: .5f} - ¹⁄₂ ) √{cant_num_rectangulares}) / √(¹⁄₁₂)| = {Zo: .5f}')
+
+    alfa_real = (100 - alfa) / 100
+    estadistico_Z = alfa_real / 2
+    print(f'\nαreal = 100 - {alfa} = {int(alfa_real * 100)}%')
+    print(f'Zα⁄₂ = {alfa_real} / 2 = {estadistico_Z}')
+
+    df1 = pd.read_csv("https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Promedio/Distribucion_normal.csv", header = 0)
+    df1 = df1.loc[:, ~df1.columns.str.contains('^Unnamed')]
+    df2 = df1[df1.eq(estadistico_Z).any(1)]
+    lista = list([[df2.columns.values][0], [df2.values][0][0]])
+    for x in range(len(lista[0])):
+        if lista[1][x] == estadistico_Z:
+            col = lista[0][x]
+    index = list(df2.index.where(df2[str(col)] == estadistico_Z))[0]
+
+    estadistico_tablas = float(col) + (float(index) / 10)
+    print(f'Zα⁄₂ = {estadistico_tablas}')
+
+    print("\nZo < Zα⁄₂")
+    print(f'{Zo: .5f} < {estadistico_tablas}')
+
+    if (Zo < estadistico_tablas):
+        print("Los numeros son aceptados")
+    else:
+        print("Los numeros son rechazados")
+
 
 def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
