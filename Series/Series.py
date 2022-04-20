@@ -24,9 +24,8 @@ def main():
         num_rectangulares.append(n)
 
     sub_real = pow(subintervalo, 2)
-    FEi = float(cant_num_rectangulares - 1) / (pow(subintervalo, 2))
+    FEi = float(cant_num_rectangulares - 1) / sub_real
     listAlphabet = list(map(chr, range(65, 65 + subintervalo)))
-    listAlphabet_real = list(map(chr, range(65, 65 + sub_real)))
 
     # Making pairs
     pairs_num = []
@@ -36,41 +35,28 @@ def main():
             curr_el = float(elem)
             pairs_num.append([prev_el, curr_el])
 
-    counters = []
-    interval = 1 / subintervalo
-    interval_x = 0
-    interval_y = 0
 
     # Locate pairs in the matrix
     print("\n")
-    for _ in np.arange(interval_x, 1, (interval_x + interval)):
-        x_values = []
-        for _ in np.arange(interval_y, 1, (interval_y + interval)):
-            count = 0
-            for pairs in pairs_num:
-                if interval_x <= pairs[0] < (interval_x + interval) and interval_y <= pairs[1] < (interval_y + interval):
-                    count += 1
-            interval_y += interval
-            x_values.append(count)
-        interval_y = 0
-        interval_x += interval
-        counters.append(x_values)
-
+    counters = []
     ranges_x = []
     ranges_y = []
     sumai = 0
-    while sumai < 1:
+    while sumai <= 1:
         ranges_x.append(sumai)
         ranges_y.append(sumai)
         sumai += 1 / subintervalo
-    ranges_x.append(1)
-    ranges_y.append(1)
 
-    for i in range(len(ranges_x)):
-        for j in range(len(ranges_y)):
+    for i in range(len(ranges_x) - 1):
+        x_counters = []
+        for j in range(len(ranges_y) - 1):
+            count = 0
             for pairs in pairs_num:
                 if ranges_x[i] <= pairs[0] < ranges_x[i + 1] and ranges_y[j] <= pairs[1] < ranges_y[j + 1]:
-                    print(f'({pairs[0]}, {pairs[1]}) {listAlphabet_real[i]}')
+                    print(f'({pairs[0]}, {pairs[1]}) {listAlphabet[i]}')
+                    count += 1
+            x_counters.append(count)
+        counters.append(x_counters)
 
     df = pd.DataFrame(counters, columns=listAlphabet, index=listAlphabet)
     print("\n", df)
@@ -85,8 +71,8 @@ def main():
     sumax = 0
     print("\n")
     print("FEi =", cant_num_rectangulares, "- 1 /(", subintervalo, ")² =", FEi)
-    print(
-        f'Xo² = {pow((subintervalo), 2)} / {cant_num_rectangulares - 1}', end='[')
+    print(f'Xo² = {pow((subintervalo), 2)} / {cant_num_rectangulares - 1}', end='[')
+
     for x in range(subintervalo):
         for y in range(subintervalo):
             sumax += math.pow(counters[x][y] - FEi, 2)
