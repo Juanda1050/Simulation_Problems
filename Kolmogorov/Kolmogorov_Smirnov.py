@@ -13,7 +13,7 @@ def main():
     num_rectangulares = []
     cant_num_rectangulares = int(
         input("Ingrese la cantidad de numeros rectangulares: "))
-    alfa = int(input("Ingrese el valor porcentual de alfa (en entero):"))
+    alfa = int(input("Ingrese el valor porcentual de alfa (en entero): "))
     for input_rectangulares in range(0, cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=float,

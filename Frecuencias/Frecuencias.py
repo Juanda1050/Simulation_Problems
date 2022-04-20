@@ -41,8 +41,15 @@ def main():
         count = len([y for y in num_rectangulares if y >
                     ranges[x] and y <= ranges[x+1]])
         counters.append(count)
+    
+    print("\n")
+    for i in range(len(ranges)):
+        for j in range(cant_num_rectangulares):
+            if (num_rectangulares[j] > ranges[i] and num_rectangulares[j] <= ranges[i + 1]):
+                print(f'[{j + 1}] = {num_rectangulares[j]} {listAlphabet[i]}')
 
     # Dataframe for data
+    print("\n")
     rtd = []
     try:
         [rtd.append(str(ranges[x])+"-"+str(ranges[x + 1]))
@@ -53,28 +60,34 @@ def main():
     [fo.append(FEi) for x in range(subintervalo)]
     df = pd.DataFrame([fo, counters, rtd],
                       columns=listAlphabet, index=["FEi", "FOi", " "])
-    print(df)
+    print(df, "\n")
 
     # Table calculations
-    # df1 = pd.read_csv(
-    #     "https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv", index_col=0, header=0)
-    # tdata = df1.loc[(subintervalo - 1), str(alfa / 100)]
+    df1 = pd.read_csv(
+        "https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv", index_col=0, header=0)
+    tdata = df1.loc[(subintervalo - 1), str(alfa / 100)]
 
-    # # Sum of FO-FE
-    # sumax = 0
-    # for x in range(subintervalo):
-    #     sumax += (counters[x] - FEi) * (counters[x] - FEi)
-    # x0t2 = (1 / FEi) * sumax
+    # Sum of FO-FE
+    sumax = 0
+    print(f'FEi = {cant_num_rectangulares} / {subintervalo} = {FEi}')
+    print(f'Xo² = 1 / {FEi}', end='[')
+    for x in range(subintervalo):
+        sumax += (counters[x] - FEi) * (counters[x] - FEi)
+        print(f'({counters[x]} - {FEi})²', end='')
+        if x != subintervalo - 1:
+            print(" + ", end='')
+    print("]\n")
+    x0t2 = (1 / FEi) * sumax
 
-    # print("FEi =", FEi)
-    # print("Xo² =", x0t2)
-    # print("X²", alfa / 100, ",", subintervalo - 1, ":", tdata)
+    print(f'Xo² = {x0t2}')
+    print("X²", alfa / 100, ",", subintervalo - 1, ":", tdata)
+    print(f'Xo² < X²α, n - 1 \n{x0t2} < {tdata}')
 
-    # # Evaluate Xot² with table
-    # if x0t2 < tdata:
-    #     print("Los numeros son aceptados")
-    # else:
-    #     print("Los numeros no son aceptados")
+    # Evaluate Xot² with table
+    if x0t2 < tdata:
+        print("Los numeros son aceptados")
+    else:
+        print("Los numeros no son aceptados")
 
     # Restart for .exe
     restartProgram()

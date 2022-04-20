@@ -16,7 +16,7 @@ def main():
     alfa = getInput(prompt="Ingrese el porcentaje de alfa: ",
                     cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     subintervalo = getInput(prompt="Ingrese la cantidad de subinvertalos: ",
-                    cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+                            cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     for input_rectangulares in range(cant_num_rectangulares):
         n = getInput(prompt="[" + str(input_rectangulares + 1) + "]: ",
                      cast=str,
@@ -33,7 +33,6 @@ def main():
             prev_el = float(num_rectangulares[index - 1])
             curr_el = float(elem)
             pairs_num.append([prev_el, curr_el])
-            print(prev_el, curr_el)
 
     counters = []
     interval = 1 / subintervalo
@@ -41,14 +40,17 @@ def main():
     interval_y = 0
 
     # Locate pairs in the matrix
+    print("\n")
     for _ in np.arange(interval_x, 1, (interval_x + interval)):
         x_values = []
         for _ in np.arange(interval_y, 1, (interval_y + interval)):
             count = 0
+            letter = 0
             for pairs in pairs_num:
-                if interval_x <= pairs[0] < (interval_x + interval) and interval_y <= pairs[1] < (
-                        interval_y + interval):
+                if interval_x <= pairs[0] < (interval_x + interval) and interval_y <= pairs[1] < (interval_y + interval):
+                    print(f'({pairs[0]}, {pairs[1]}) {listAlphabet[letter]}')
                     count += 1
+                    letter += 1
             interval_y += interval
             x_values.append(count)
         interval_y = 0
@@ -56,9 +58,9 @@ def main():
         counters.append(x_values)
 
     df = pd.DataFrame(counters, columns=listAlphabet, index=listAlphabet)
-    print(df)
+    print("\n", df, "\n")
 
-    #Table of calculations
+    # Table of calculations
     df1 = pd.read_csv("https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv",
                       index_col=0, header=0)
 
@@ -66,6 +68,8 @@ def main():
     tdata = df1.loc[n_restada, str(alfa / 100)]
 
     sumax = 0
+    print("\n")
+    print("FEi =", cant_num_rectangulares, "- 1 /(", subintervalo, ")² =", FEi)
     print(
         f'Xo² = {pow((subintervalo), 2)} / {cant_num_rectangulares - 1}', end='[')
     for x in range(subintervalo):
@@ -75,11 +79,12 @@ def main():
             if x + 1 <= subintervalo and y + 1 <= subintervalo:
                 if y != subintervalo - 1:
                     print(" + ", end='')
+        if x != subintervalo - 1:
+            print(" + ", end='')
 
     print("]")
     x0t2 = (1 / FEi) * sumax
 
-    print("FEi =", cant_num_rectangulares, "- 1 /(", subintervalo, ")² =", FEi)
     print("Xo² =", round(x0t2, 2))
     print("X²", alfa / 100, ",", n_restada, "=", tdata)
 
