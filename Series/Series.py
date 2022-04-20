@@ -23,8 +23,10 @@ def main():
                      errorMessage="Numero incorrecto. Intenta de nuevo")
         num_rectangulares.append(n)
 
+    sub_real = pow(subintervalo, 2)
     FEi = float(cant_num_rectangulares - 1) / (pow(subintervalo, 2))
     listAlphabet = list(map(chr, range(65, 65 + subintervalo)))
+    listAlphabet_real = list(map(chr, range(65, 65 + sub_real)))
 
     # Making pairs
     pairs_num = []
@@ -45,20 +47,33 @@ def main():
         x_values = []
         for _ in np.arange(interval_y, 1, (interval_y + interval)):
             count = 0
-            letter = 0
             for pairs in pairs_num:
                 if interval_x <= pairs[0] < (interval_x + interval) and interval_y <= pairs[1] < (interval_y + interval):
-                    print(f'({pairs[0]}, {pairs[1]}) {listAlphabet[letter]}')
                     count += 1
-                    letter += 1
             interval_y += interval
             x_values.append(count)
         interval_y = 0
         interval_x += interval
         counters.append(x_values)
 
+    ranges_x = []
+    ranges_y = []
+    sumai = 0
+    while sumai < 1:
+        ranges_x.append(sumai)
+        ranges_y.append(sumai)
+        sumai += 1 / subintervalo
+    ranges_x.append(1)
+    ranges_y.append(1)
+
+    for i in range(len(ranges_x)):
+        for j in range(len(ranges_y)):
+            for pairs in pairs_num:
+                if ranges_x[i] <= pairs[0] < ranges_x[i + 1] and ranges_y[j] <= pairs[1] < ranges_y[j + 1]:
+                    print(f'({pairs[0]}, {pairs[1]}) {listAlphabet_real[i]}')
+
     df = pd.DataFrame(counters, columns=listAlphabet, index=listAlphabet)
-    print("\n", df, "\n")
+    print("\n", df)
 
     # Table of calculations
     df1 = pd.read_csv("https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv",
@@ -87,6 +102,7 @@ def main():
 
     print("Xo² =", round(x0t2, 2))
     print("X²", alfa / 100, ",", n_restada, "=", tdata)
+    print(f'\nX²α, n - 1 > Xo²  \n{tdata} > {x0t2: .2f}')
 
     if x0t2 < tdata:
         print("Los numeros son aceptados")

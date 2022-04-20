@@ -81,7 +81,7 @@ def main():
 
     print(f'Xo² = {x0t2}')
     print("X²", alfa / 100, ",", subintervalo - 1, ":", tdata)
-    print(f'Xo² < X²α, n - 1 \n{x0t2} < {tdata}')
+    print(f'\nXo² < X²α, n - 1 \n{x0t2} < {tdata}')
 
     # Evaluate Xot² with table
     if x0t2 < tdata:
