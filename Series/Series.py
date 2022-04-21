@@ -62,7 +62,7 @@ def main():
     print("\n", df)
 
     # Table of calculations
-    df1 = pd.read_csv("https://raw.githubusercontent.com/Davvii1/X-2DistributionTableCSV/main/DistribucionX2.csv",
+    df1 = pd.read_csv("https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Frecuencias/Distribucion_chicuadrado.csv",
                       index_col=0, header=0)
 
     n_restada = pow((subintervalo), 2) - 1
