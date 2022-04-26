@@ -30,10 +30,9 @@ def main():
     # Ranges
     ranges = []
     sumai = 0
-    while sumai < 1:
+    while sumai <= 1:
         ranges.append(sumai)
         sumai += 1 / subintervalo
-    ranges.append(1)
 
     # Put numbers in ranges
     counters = []
@@ -52,12 +51,12 @@ def main():
     print("\n")
     rtd = []
     try:
-        [rtd.append(str(ranges[x])+"-"+str(ranges[x + 1]))
+        [rtd.append(str(round(ranges[x], 2))+"-"+str(round(ranges[x + 1], 2)))
          for x in range(len(ranges))]
     except:
         pass
     fo = []
-    [fo.append(FEi) for x in range(subintervalo)]
+    [fo.append(round(FEi, 3)) for x in range(subintervalo)]
     df = pd.DataFrame([fo, counters, rtd],
                       columns=listAlphabet, index=["FEi", "FOi", " "])
     print(df, "\n")
@@ -65,15 +64,20 @@ def main():
     # Table calculations
     df1 = pd.read_csv(
         "https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Frecuencias/Distribucion_chicuadrado.csv", index_col=0, header=0)
-    tdata = df1.loc[(subintervalo - 1), str(alfa / 100)]
+
+    tdata = 0
+    try:
+        tdata = df1.loc[(subintervalo - 1), str(alfa / 100)]
+    except KeyError:
+        print(f'\nNo existe dentro dentro la tabla de distribucion X², por ende es {tdata}')
 
     # Sum of FO-FE
     sumax = 0
-    print(f'FEi = {cant_num_rectangulares} / {subintervalo} = {FEi}')
-    print(f'Xo² = 1 / {FEi}', end='[')
+    print(f'FEi = {cant_num_rectangulares} / {subintervalo} = {FEi: .3f}')
+    print(f'Xo² = 1 / {FEi: .3f}', end='[')
     for x in range(subintervalo):
         sumax += (counters[x] - FEi) * (counters[x] - FEi)
-        print(f'({counters[x]} - {FEi})²', end='')
+        print(f'({counters[x]} - {FEi: .3f})²', end='')
         if x != subintervalo - 1:
             print(" + ", end='')
     print("]\n")

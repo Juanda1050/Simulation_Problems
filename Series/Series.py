@@ -66,7 +66,11 @@ def main():
                       index_col=0, header=0)
 
     n_restada = pow((subintervalo), 2) - 1
-    tdata = df1.loc[n_restada, str(alfa / 100)]
+    tdata = 0
+    try:
+        tdata = df1.loc[n_restada, str(alfa / 100)]
+    except KeyError:
+        print(f'\nNo existe dentro dentro la tabla de distribucion X², por ende es {tdata}')
 
     sumax = 0
     print("\n")
