@@ -42,11 +42,15 @@ def main():
         "https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Promedio/Distribucion_normal.csv", header=0)
     df1 = df1.loc[:, ~df1.columns.str.contains('^Unnamed')]
     df2 = df1[df1.eq(estadistico_Z).any(1)]
+    print(df2)
     lista = list([[df2.columns.values][0], [df2.values][0][0]])
+    print(lista)
     for x in range(len(lista[0])):
         if lista[1][x] == estadistico_Z:
             col = lista[0][x]
+            print(col)
     index = list(df2.index.where(df2[str(col)] == estadistico_Z))[0]
+    print(index)
 
     estadistico_tablas = float(col) + (float(index) / 10)
     print(f'Zα⁄₂ = {estadistico_tablas}')
