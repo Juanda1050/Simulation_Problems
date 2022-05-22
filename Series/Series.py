@@ -14,7 +14,7 @@ def main():
     cant_num_rectangulares = getInput(prompt="Ingrese la cantidad de numeros rectangulares: ",
                                       cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     alfa = getInput(prompt="Ingrese el porcentaje de alfa: ",
-                    cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+                    cast=float, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     subintervalo = getInput(prompt="Ingrese la cantidad de subinvertalos: ",
                             cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     for input_rectangulares in range(cant_num_rectangulares):
@@ -74,13 +74,13 @@ def main():
 
     sumax = 0
     print("\n")
-    print("FEi =", cant_num_rectangulares, "- 1 /(", subintervalo, ")² =", FEi)
+    print("FEi =", cant_num_rectangulares, "- 1 /(", subintervalo, ")² =", round(FEi, 2))
     print(f'Xo² = {pow((subintervalo), 2)} / {cant_num_rectangulares - 1}', end='[')
 
     for x in range(subintervalo):
         for y in range(subintervalo):
             sumax += math.pow(counters[x][y] - FEi, 2)
-            print(f'({counters[x][y]} - {FEi})²', end='')
+            print(f'({counters[x][y]} - {FEi :.2f})²', end='')
             if x + 1 <= subintervalo and y + 1 <= subintervalo:
                 if y != subintervalo - 1:
                     print(" + ", end='')

@@ -25,7 +25,7 @@ def main():
 
     # Total of inputs and average
     promedio = sumatoria / cant_num_rectangulares
-    print("\nΣ =", sumatoria)
+    print("\nΣ =", round(sumatoria, 5))
     print("x̄ =", round(promedio, 5))
 
     # Statistical
@@ -37,25 +37,36 @@ def main():
     alfa_real = (100 - alfa) / 100
     estadistico_Z = alfa_real / 2
     print(f'\nαreal = 100 - {alfa} = {int(alfa_real * 100)}%')
-    print(f'Zα⁄₂ = {alfa_real} / 2 = {estadistico_Z}')
 
     # Get index and header of the table statistics
     df1 = pd.read_csv(
-        "https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Promedio/Distribucion_normal.csv", header=0)
-    df1 = df1.loc[:, ~df1.columns.str.contains('^Unnamed')]
-    df2 = df1[df1.eq(estadistico_Z).any(1)]
+        "https://raw.githubusercontent.com/Juanda1050/Simulation_Problems/main/Promedio/Distribucion_normal.csv", header=0, index_col=0)
+    search_list = df1.values.tolist()
+    search_list2 = []
+    for item in search_list:
+        for value in item:
+            search_list2.append(value)
+    closest_found = False 
+    for i in search_list2:
+        if i >= estadistico_Z and closest_found == False:
+            closest = i
+            closest_found = True
+
+    print(f'Zα⁄₂ = {alfa_real} / 2 = {closest}')
+
+    df2 = df1[df1.eq(closest).any(1)]
     lista = list([[df2.columns.values][0], [df2.values][0][0]])
     for x in range(len(lista[0])):
-        if lista[1][x] == estadistico_Z:
+        if lista[1][x] == closest:
             col = lista[0][x]
-    index = list(df2.index.where(df2[str(col)] == estadistico_Z))[0]
+    index = list(df2.index.where(df2[str(col)] == closest))[0]
 
-    estadistico_tablas = float(col) + (float(index) / 10)
-    print(f'Zα⁄₂ = {estadistico_tablas}')
+    estadistico_tablas = float(col) + float(index)
+    print(f'Zα⁄₂ = {estadistico_tablas: .2f}')
 
     # Compare statistics
     print("\nZo < Zα⁄₂")
-    print(f'{Zo: .5f} < {estadistico_tablas}')
+    print(f'{Zo: .5f} < {estadistico_tablas: .2f}')
 
     # Print analysis
     if (Zo < estadistico_tablas):
