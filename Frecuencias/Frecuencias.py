@@ -12,7 +12,7 @@ def main():
     cant_num_rectangulares = getInput(prompt="Ingrese la cantidad de numeros rectangulares: ",
                                       cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     alfa = getInput(prompt="Ingrese el porcentaje de alfa: ",
-                    cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
+                    cast=float, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     subintervalo = getInput(prompt="Ingrese la cantidad de subinvertalos: ",
                             cast=int, condition=lambda x: x > 0, errorMessage="Numero incorrecto. Intenta de nuevo")
     for input_rectangulares in range(0, cant_num_rectangulares):
@@ -73,19 +73,19 @@ def main():
 
     # Sum of FO-FE
     sumax = 0
-    print(f'FEi = {cant_num_rectangulares} / {subintervalo} = {FEi: .3f}')
-    print(f'Xo² = 1 / {FEi: .3f}', end='[')
+    print(f'FEi = {cant_num_rectangulares} / {subintervalo} = {FEi: .2f}')
+    print(f'Xo² = 1 / {FEi: .2f}', end='[')
     for x in range(subintervalo):
         sumax += (counters[x] - FEi) * (counters[x] - FEi)
-        print(f'({counters[x]} - {FEi: .3f})²', end='')
+        print(f'({counters[x]} - {FEi: .2f})²', end='')
         if x != subintervalo - 1:
             print(" + ", end='')
     print("]\n")
     x0t2 = (1 / FEi) * sumax
 
-    print(f'Xo² = {x0t2}')
+    print(f'Xo² = {x0t2: .2f}')
     print("X²", alfa / 100, ",", subintervalo - 1, ":", tdata)
-    print(f'\nXo² < X²α, n - 1 \n{x0t2} < {tdata}')
+    print(f'\nXo² < X²α, n - 1 \n{x0t2: .2f} < {tdata}')
 
     # Evaluate Xot² with table
     if x0t2 < tdata:
