@@ -1,8 +1,6 @@
 import random
 import sys
 import os
-from termcolor import colored
-
 
 def main():
     # Print title
